@@ -1,0 +1,14 @@
+package rules
+
+import java.lang.Number
+import com.secbro.drools.model.*
+rule "TestDrl"
+	dialect "mvel"
+	when
+		m : TestDataModel( age >= 20 , score <= 100 )
+		scoreModal :ScoreModal()
+	then
+		m.setScore( 200 );
+		scoreModal.setScore(200);
+		retract( m );
+end

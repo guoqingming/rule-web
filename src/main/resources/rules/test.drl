@@ -1,0 +1,21 @@
+package rules
+import java.util.Map;
+import java.util.HashMap;
+rule scoreCheck1
+     dialect "mvel"
+     when 
+         resultMap : HashMap() 
+         map: Map(this["score"]>=60)
+     then
+     resultMap.put("name",map.get("name"));
+     resultMap.put("message","及格");
+end
+rule scoreCheck2
+     dialect "mvel"
+         when
+             resultMap : HashMap() 
+             map: Map(this["score"]<60)
+         then
+         resultMap.put("name",map.get("name"));
+         resultMap.put("message","不及格");
+end

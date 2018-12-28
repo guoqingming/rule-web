@@ -1,0 +1,14 @@
+package rules
+
+import java.util.Map;
+import java.util.HashMap;
+rule "mapTest"
+    dialect "mvel"
+    lock-on-active true
+     when
+       resultMap : HashMap()
+       map: Map(this["name"] == "Bob" ||this["age"] <= 18)
+     then
+         resultMap.put("sucess",map.get("name"));
+         System.out.println("执行成功1");
+end

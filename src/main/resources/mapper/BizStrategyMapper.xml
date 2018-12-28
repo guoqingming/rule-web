@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secbro.drools.mapper.BizStrategyMapper">
+  <resultMap id="BaseResultMap" type="com.secbro.drools.domain.BizStrategy">
+    <!-- generated @mbg.generated date: 2018-12-25 -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="strategy_name" jdbcType="VARCHAR" property="strategyName" />
+    <result column="enable" jdbcType="TINYINT" property="enable" />
+    <result column="strategy_desc" jdbcType="VARCHAR" property="strategyDesc" />
+    <!--<result column="rule_content" jdbcType="VARCHAR" property="ruleContent" />-->
+
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.secbro.drools.domain.BizStrategy">
+    <!-- generated @mbg.generated date: 2018-12-25 -->
+    <result column="rule_content" jdbcType="LONGVARCHAR" property="ruleContent" />
+    <result column="rule_params" jdbcType="LONGVARCHAR" property="ruleParams" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!-- generated @mbg.generated date: 2018-12-25 -->
+    id, strategy_name, `enable`, strategy_desc, create_at, create_by, update_at, update_by
+  </sql>
+  <sql id="Blob_Column_List">
+    <!-- generated @mbg.generated date: 2018-12-25 -->
+    rule_content,rule_params
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    <!-- generated @mbg.generated date: 2018-12-25 -->
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from biz_strategy
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="queryByName" resultMap="BaseResultMap">
+
+    select <include refid="Base_Column_List"/> from biz_strategy where strategy_name = #{name}
+  </select>
+  <select id="fuzzySearchStrategy" resultMap="BaseResultMap">
+
+    select id,strategy_name,strategy_desc,enable,create_at,create_by,update_by,update_at from biz_strategy
+    where 1=1
+    <if test="keyword != null and keyword != ''">
+      and strategy_name LIKE CONCAT('%',#{keyword},'%')  or strategy_desc LIKE CONCAT('%',#{keyword},'%')
+    </if>
+
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    <!-- generated @mbg.generated date: 2018-12-25 -->
+    delete from biz_strategy
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.secbro.drools.domain.BizStrategy">
+    <!-- generated @mbg.generated date: 2018-12-25 -->
+    insert into biz_strategy (id, strategy_name, `enable`, 
+      strategy_desc, create_at, create_by, 
+      update_at, update_by, rule_content
+      )
+    values (#{id,jdbcType=INTEGER}, #{strategyName,jdbcType=VARCHAR}, #{enable,jdbcType=TINYINT}, 
+      #{strategyDesc,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
+      #{updateAt,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{ruleContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.secbro.drools.domain.BizStrategy">
+    <!-- generated @mbg.generated date: 2018-12-25 -->
+    insert into biz_strategy
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="strategyName != null">
+        strategy_name,
+      </if>
+      <if test="enable != null">
+        `enable`,
+      </if>
+      <if test="strategyDesc != null">
+        strategy_desc,
+      </if>
+      <if test="ruleParams != null">
+        rule_params,
+      </if>
+
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="ruleContent != null">
+        rule_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="strategyName != null">
+        #{strategyName,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null">
+        #{enable,jdbcType=TINYINT},
+      </if>
+      <if test="strategyDesc != null">
+        #{strategyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleParams != null">
+        #{ruleParams,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleContent != null">
+        #{ruleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByIdSelective" parameterType="com.secbro.drools.domain.BizStrategy">
+    <!-- generated @mbg.generated date: 2018-12-25 -->
+    update biz_strategy
+    <set>
+      <if test="strategyName != null">
+        strategy_name = #{strategyName,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null">
+        `enable` = #{enable,jdbcType=TINYINT},
+      </if>
+      <if test="strategyDesc != null">
+        strategy_desc = #{strategyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleParams != null">
+        rule_params = #{ruleParams,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleContent != null">
+        rule_content = #{ruleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.secbro.drools.domain.BizStrategy">
+    <!-- generated @mbg.generated date: 2018-12-25 -->
+    update biz_strategy
+    set strategy_name = #{strategyName,jdbcType=VARCHAR},
+      `enable` = #{enable,jdbcType=TINYINT},
+      strategy_desc = #{strategyDesc,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      rule_content = #{ruleContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateById" parameterType="com.secbro.drools.domain.BizStrategy">
+    <!-- generated @mbg.generated date: 2018-12-25 -->
+    update biz_strategy
+    set strategy_name = #{strategyName,jdbcType=VARCHAR},
+      `enable` = #{enable,jdbcType=TINYINT},
+      strategy_desc = #{strategyDesc,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

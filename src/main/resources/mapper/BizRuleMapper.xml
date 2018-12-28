@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secbro.drools.mapper.BizRuleMapper">
+  <resultMap id="BaseResultMap" type="com.secbro.drools.domain.BizRule">
+    <!-- generated @mbg.generated date: 2018-12-21 -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="rule_name" jdbcType="VARCHAR" property="ruleName" />
+    <result column="rule_desc" jdbcType="VARCHAR" property="ruleDesc" />
+    <result column="filter_expression" jdbcType="VARCHAR" property="filterExpression" />
+    <result column="output_expression" jdbcType="VARCHAR" property="outputExpression" />
+    <result column="enable" jdbcType="TINYINT" property="enable" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.secbro.drools.domain.BizRule">
+    <!-- generated @mbg.generated date: 2018-12-21 -->
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!-- generated @mbg.generated date: 2018-12-21 -->
+    id, rule_name, rule_desc, filter_expression, output_expression, `enable`, create_by, 
+    create_at, update_by, update_at
+  </sql>
+  <sql id="Blob_Column_List">
+    <!-- generated @mbg.generated date: 2018-12-21 -->
+    content
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    <!-- generated @mbg.generated date: 2018-12-21 -->
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from biz_rule
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="queryByRuleName" resultMap="BaseResultMap">
+      select * from biz_rule where rule_name =#{ruleName}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+    <!-- generated @mbg.generated date: 2018-12-21 -->
+    delete from biz_rule
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.secbro.drools.domain.BizRule">
+    <!-- generated @mbg.generated date: 2018-12-21 -->
+    insert into biz_rule (id, rule_name, rule_desc, 
+      filter_expression, output_expression, `enable`, 
+      create_by, create_at, update_by, 
+      update_at, content)
+    values (#{id,jdbcType=INTEGER}, #{ruleName,jdbcType=VARCHAR}, #{ruleDesc,jdbcType=VARCHAR}, 
+      #{filterExpression,jdbcType=VARCHAR}, #{outputExpression,jdbcType=VARCHAR}, #{enable,jdbcType=TINYINT}, 
+      #{createBy,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateAt,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.secbro.drools.domain.BizRule">
+    <!-- generated @mbg.generated date: 2018-12-21 -->
+    insert into biz_rule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="ruleName != null">
+        rule_name,
+      </if>
+      <if test="ruleDesc != null">
+        rule_desc,
+      </if>
+      <if test="filterExpression != null">
+        filter_expression,
+      </if>
+      <if test="outputExpression != null">
+        output_expression,
+      </if>
+      <if test="enable != null">
+        `enable`,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="ruleName != null">
+        #{ruleName,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleDesc != null">
+        #{ruleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="filterExpression != null">
+        #{filterExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="outputExpression != null">
+        #{outputExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null">
+        #{enable,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByIdSelective" parameterType="com.secbro.drools.domain.BizRule">
+    <!-- generated @mbg.generated date: 2018-12-21 -->
+    update biz_rule
+    <set>
+      <if test="ruleName != null">
+        rule_name = #{ruleName,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleDesc != null">
+        rule_desc = #{ruleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="filterExpression != null">
+        filter_expression = #{filterExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="outputExpression != null">
+        output_expression = #{outputExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null">
+        `enable` = #{enable,jdbcType=TINYINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.secbro.drools.domain.BizRule">
+    <!-- generated @mbg.generated date: 2018-12-21 -->
+    update biz_rule
+    set rule_name = #{ruleName,jdbcType=VARCHAR},
+      rule_desc = #{ruleDesc,jdbcType=VARCHAR},
+      filter_expression = #{filterExpression,jdbcType=VARCHAR},
+      output_expression = #{outputExpression,jdbcType=VARCHAR},
+      `enable` = #{enable,jdbcType=TINYINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateById" parameterType="com.secbro.drools.domain.BizRule">
+    <!-- generated @mbg.generated date: 2018-12-21 -->
+    update biz_rule
+    set rule_name = #{ruleName,jdbcType=VARCHAR},
+      rule_desc = #{ruleDesc,jdbcType=VARCHAR},
+      filter_expression = #{filterExpression,jdbcType=VARCHAR},
+      output_expression = #{outputExpression,jdbcType=VARCHAR},
+      `enable` = #{enable,jdbcType=TINYINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
