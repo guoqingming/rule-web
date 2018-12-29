@@ -13,6 +13,8 @@ import java.util.List;
 @Data
 public class RuleParam {
 
+    private String ruleDesc;
+
     private List<Expression> conditions;
 
     private List<Expression> outputSettings;

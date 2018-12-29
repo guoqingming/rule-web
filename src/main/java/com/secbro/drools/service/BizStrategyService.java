@@ -110,6 +110,7 @@ public class BizStrategyService {
         sb.append("import java.util.Map;\n");
         sb.append("import java.util.HashMap;\n");
         for (int i = 0; i < params.size(); i++) {
+            sb.append("//" + params.get(i).getRuleDesc() + "\n");
             sb.append("rule " + bizStrategy.getStrategyName() + i +"\n");
             sb.append("\tdialect \"mvel\"\n");
             sb.append("\twhen \n");
@@ -148,7 +149,7 @@ public class BizStrategyService {
             }
 
             sb.append(oStr);
-            sb.append("end");
+            sb.append("end\n");
         }
 
         droolsRulesService.reload(sb.toString());
@@ -160,51 +161,7 @@ public class BizStrategyService {
         strategyMapper.updateByIdSelective(strategy);
         return sb.toString();
     }
-    /**
-     * 生成业务规则
-     *
-     * @param condition        过滤条件
-     * @param outputExpression 输出赋值表达式
-     * @return
-     */
-//    public String extractRule(Integer ruleId, String ruleName, String condition, List<String> outputExpression) {
-//
-//        StringBuffer sb = new StringBuffer();
-//        sb.append("package rules\n");
-//        sb.append("import java.util.Map;\n");
-//        sb.append("import java.util.HashMap;\n");
-//        sb.append("rule " + ruleName +"\n");
-//        sb.append("     dialect \"mvel\"\n");
-//        sb.append("     when \n");
-//        sb.append("         resultMap : HashMap() \n");
-//        List<RuleInput> ruleInputs = ruleInputMapper.queryByRuleId(ruleId);
-//
-//        List<String> paramNames = ruleInputs.stream().map(ri ->
-//                ri.getName()
-//        ).collect(Collectors.toList());
-//
-//        for (String s : paramNames) {
-//            String regex = "\\$\\{" + s + "\\}";
-//            String repacement = "this[\""+s+"\"]";
-//            condition = condition.replaceAll(regex, repacement);
-//        }
-//        sb.append("         map: Map("+condition+")\n");
-//        sb.append("     then\n");
-//        // value=${age}*2-1
-//        for (String e : outputExpression) {
-//            String left = e.split("=")[0];
-//            String right = e.split("=")[1];
-//            for (String paramName : paramNames) {
-//                String regex = "\\$\\{" + paramName + "\\}";
-//                String repacement = "map.get(\""+paramName+"\")";
-//                right = right.replaceAll(regex, repacement);
-//            }
-//            sb.append("     resultMap.put(\""+left +"\"," +right+");\n");
-//        }
-//        sb.append("end");
-//        FileUtil.writeBytes(sb.toString().getBytes(), new File("test.drl"));
-//        return sb.toString();
-//    }
+
 
     public Map<String,Object> testRules(String data, Integer strategyId){
         BizStrategy strategy = strategyMapper.getById(strategyId);
