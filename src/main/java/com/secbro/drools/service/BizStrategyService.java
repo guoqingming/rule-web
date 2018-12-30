@@ -41,7 +41,7 @@ public class BizStrategyService {
     private BizRuleMapper ruleMapper;
 
     @Resource
-    private RuleInputMapper  ruleInputMapper;
+    private RuleInputMapper ruleInputMapper;
 
     @Resource
     private RuleOutputMapper ruleOutputMapper;
@@ -67,18 +67,20 @@ public class BizStrategyService {
 
 
     public void deleteStrategy(Integer id) {
-        CheckUtil.isNull(id,"策略ID为空");
+        CheckUtil.isNull(id, "策略ID为空");
         strategyMapper.deleteById(id);
     }
 
     public BizStrategy getById(Integer id) {
         return strategyMapper.getById(id);
     }
+
     /**
      * 模糊查询策略
-     * @param pageNum 当前页
+     *
+     * @param pageNum  当前页
      * @param pageSize 页面大小
-     * @param keyword 关键字
+     * @param keyword  关键字
      * @return
      */
     public PageInfo<BizStrategy> fuzzyQueryStrategy(Integer pageNum, Integer pageSize, String keyword) {
@@ -86,6 +88,7 @@ public class BizStrategyService {
         List<BizStrategy> bizStrategies = strategyMapper.fuzzySearchStrategy(keyword);
         return new PageInfo<>(bizStrategies);
     }
+
     public List<RuleInput> queryStategyInputList(Integer strategyId) {
         return ruleInputMapper.queryByStrategyId(strategyId);
     }
@@ -97,6 +100,7 @@ public class BizStrategyService {
 
     /**
      * 生成规则
+     *
      * @param strategyId 策略ID
      * @param params
      * @return
@@ -104,31 +108,39 @@ public class BizStrategyService {
     public String createRules(Integer strategyId, List<RuleParam> params) {
 
         BizStrategy bizStrategy = strategyMapper.getById(strategyId);
-        CheckUtil.isNull(bizStrategy,"未找到【{"+bizStrategy+"}】对应的策略");
+        CheckUtil.isNull(bizStrategy, "未找到【{" + bizStrategy + "}】对应的策略");
         StringBuffer sb = new StringBuffer();
         sb.append("package rules\n");
         sb.append("import java.util.Map;\n");
         sb.append("import java.util.HashMap;\n");
         for (int i = 0; i < params.size(); i++) {
             sb.append("//" + params.get(i).getRuleDesc() + "\n");
-            sb.append("rule " + bizStrategy.getStrategyName() + i +"\n");
+            sb.append("rule " + bizStrategy.getStrategyName() + i + "\n");
             sb.append("\tdialect \"mvel\"\n");
             sb.append("\twhen \n");
             sb.append("\t\tresultMap : HashMap() \n");
             String str = "\t\tmap: Map(";
             for (Expression expression : params.get(i).getConditions()) {
 //                map: Map(this["score"]>=60)
-                   str +="this[\"";
-                str += expression.getLeft().getParamName()+ "\"]" + expression.getRelationOperator().getValue();
-                if("String".equals(expression.getLeft().getParamType())){
-                    str += "\"" + expression.getRight().getValue() + "\"";
-                  }else {
-                    str += expression.getRight().getValue();
+                if ("(".equals(expression.getGroupFlag())) {
+                    str += "(";
                 }
 
-                if(expression.getLogicOperator()!= null && StringUtils.isNotBlank(expression.getLogicOperator().getValue())){
+                str += "this[\"";
+
+
+                str += expression.getLeft().getParamName() + "\"]" + expression.getRelationOperator().getValue();
+                if ("String".equals(expression.getLeft().getParamType())) {
+                    str += "\"" + expression.getRight().getValue() + "\"";
+                } else {
+                    str += expression.getRight().getValue();
+                }
+                if (")".equals(expression.getGroupFlag())) {
+                    str += ")";
+                }
+                if (expression.getLogicOperator() != null && StringUtils.isNotBlank(expression.getLogicOperator().getValue())) {
                     str += expression.getLogicOperator().getValue();
-                }else {
+                } else {
                     str += ")\n";
                 }
 
@@ -139,10 +151,10 @@ public class BizStrategyService {
             for (Expression expression : params.get(i).getOutputSettings()) {
                 oStr += "\t\tresultMap.put(";
                 oStr += "\"" + expression.getLeft().getParamName() + "\",";
-                if(expression.getRight().getType() == 1){
-                    if("String".equals(expression.getLeft().getParamType())){
+                if (expression.getRight().getType() == 1) {
+                    if ("String".equals(expression.getLeft().getParamType())) {
                         oStr += "\"" + expression.getRight().getValue() + "\")\n";
-                    }else {
+                    } else {
                         oStr += expression.getRight().getValue() + ")\n";
                     }
                 }
@@ -163,11 +175,11 @@ public class BizStrategyService {
     }
 
 
-    public Map<String,Object> testRules(String data, Integer strategyId){
+    public Map<String, Object> testRules(String data, Integer strategyId) {
         BizStrategy strategy = strategyMapper.getById(strategyId);
-        CheckUtil.isNull(strategy,"未找到【"+strategyId+"】对应的策略");
+        CheckUtil.isNull(strategy, "未找到【" + strategyId + "】对应的策略");
         droolsRulesService.reload(strategy.getRuleContent());
-        Map<String,Object> map = JsonUtils.toBean(data,Map.class);
+        Map<String, Object> map = JsonUtils.toBean(data, Map.class);
         KieSession kieSession = KieUtils.getKieContainer().newKieSession();
         kieSession.insert(map);
         HashMap<String, Object> result = new HashMap<>();

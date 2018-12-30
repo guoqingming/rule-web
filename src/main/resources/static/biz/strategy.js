@@ -399,25 +399,27 @@ strategy.createRules = function () {
         $(this).find(".filterTable tbody tr").each(function (i) {
             {
                 var obj = {}
-                var paramName = $(this).find("td:first select").val();
-                var paramDesc = $(this).find("td:first select option:selected").text()
-                var paramType = $(this).find("td:first select option:selected").attr("data-type");
+                obj.group = $(this).find("td:eq(0)").text();
+                obj.groupFlag = $(this).find("td:eq(0)").attr("group-flag");
+                var paramName = $(this).find("td:eq(1) select").val();
+                var paramDesc = $(this).find("td:eq(1) select option:selected").text()
+                var paramType = $(this).find("td:eq(1) select option:selected").attr("data-type");
                 obj.left = {
                     paramName: paramName,
                     paramDesc: paramDesc,
                     paramType: paramType
                 };
                 var operator = {}
-                operator.value = $(this).find("td:eq(1) select").val();
-                operator.name = $(this).find("td:eq(1) select option:selected").text();
+                operator.value = $(this).find("td:eq(2) select").val();
+                operator.name = $(this).find("td:eq(2) select option:selected").text();
                 obj.relationOperator = operator;
                 var right = {}
-                right.type = $(this).find("td:eq(2) select").val();
-                right.value = $(this).find("td:eq(3) input").val();
+                right.type = $(this).find("td:eq(3) select").val();
+                right.value = $(this).find("td:eq(4) input").val();
                 obj.right = right;
 
                 var logicConnector = {}
-                logicConnector.value = $(this).find("td:eq(4) input:checked").val()
+                logicConnector.value = $(this).find("td:eq(5) input:checked").val()
                 obj.logicOperator = logicConnector;
                 conditons.push(obj)
             }
@@ -552,6 +554,7 @@ strategy.testRules = function () {
 strategy.refreshRuleSettings = function () {
     var strategyId = $("#strategyId").val();
     strategy.defaultConditionTr = '<tr>\n' +
+                                '      <td >1</td>'+
                                 '      <td>\n' +
                                 '          <select  class="form-control inputSelect">\n' +
                                 '              <option value="">请选择</option>\n';
@@ -586,9 +589,9 @@ strategy.refreshRuleSettings = function () {
                                         '          <input class="form-control">\n' +
                                         '      </td>\n' +
                                         '      <td>\n' +
-                                        '           <input  type="radio"  onclick="strategy.addConditionTr(this)" name="connector" class="connector" value="&&">\n' +
+                                        '           <input  type="radio"  onclick="strategy.showConditionGroupModal(this)" name="connector" class="connector" value="&&">\n' +
                                         '           <label >并且</label>\n' +
-                                        '           <input onclick="strategy.addConditionTr(this)" type="radio" name="connector" class="connector" value="||" >\n' +
+                                        '           <input onclick="strategy.showConditionGroupModal(this)" type="radio" name="connector" class="connector" value="||" >\n' +
                                         '           <label >或者</label>\n' +
                                         '       </td>'+
                                         '<td> <button class="btn btn-danger" onclick="strategy.deleteConditionTr(this)">删除</button></td>' +
@@ -665,6 +668,7 @@ $.get("strategy/get",{id: strategyId},function (data) {
          '                                                        <form class="form-inline" role="form">\n' +
          '                                                            <table class="table filterTable">\n' +
          '                                                                <thead>\n' +
+         '                                                                <th>组</th>\n' +
          '                                                                <th>输入参数</th>\n' +
          '                                                                <th>比较符</th>\n' +
          '                                                                <th>类型</th>\n' +
@@ -722,7 +726,7 @@ strategy.renderRuleSettings = function (ruleParams) {
     $.each(ruleParams,function (index, item) {
         var defaultRuleSettingsHtml = '<div class="panel panel-primary rule-panel">\n' +
             '                                            <div class="panel-heading">\n' +
-            '                                                <h3 class="panel-title">规则 </h3>\n' +
+            '                                                <h3 class="panel-title">规则 &nbsp;&nbsp;<a href="#" onclick="strategy.deleteRulePanel(this)" class="addOutputTr glyphicon glyphicon-minus"></a></h3>\n' +
             '                                            </div>\n' +
             '                                            <div class="panel-body">\n' +
             // '                                               <div class="col-md-12">' +
@@ -740,6 +744,7 @@ strategy.renderRuleSettings = function (ruleParams) {
             '                                                        <form class="form-inline" role="form">\n' +
             '                                                            <table class="table filterTable">\n' +
             '                                                                <thead>\n' +
+            '                                                                <th>组</th>\n' +
             '                                                                <th>输入参数</th>\n' +
             '                                                                <th>比较符</th>\n' +
             '                                                                <th>类型</th>\n' +
@@ -791,10 +796,10 @@ strategy.renderRuleSettings = function (ruleParams) {
     $.each(ruleParams,function (index, item) {
 
         $.each(item.conditions,function (i,item) {
-            $("#ruleSettingParentDiv .filterTable:eq("+index+") tbody tr:eq("+i+") td:first select").val(item.left.paramName);
-            $("#ruleSettingParentDiv .filterTable:eq("+index+") tbody tr:eq("+i+") td:eq(1) select").val(item.relationOperator.value);
-            $("#ruleSettingParentDiv .filterTable:eq("+index+") tbody tr:eq("+i+") td:eq(2) select").val(item.right.type);
-            $("#ruleSettingParentDiv .filterTable:eq("+index+") tbody tr:eq("+i+") td:eq(3) input").val(item.right.value);
+            $("#ruleSettingParentDiv .filterTable:eq("+index+") tbody tr:eq("+i+") td:eq(1) select").val(item.left.paramName);
+            $("#ruleSettingParentDiv .filterTable:eq("+index+") tbody tr:eq("+i+") td:eq(2) select").val(item.relationOperator.value);
+            $("#ruleSettingParentDiv .filterTable:eq("+index+") tbody tr:eq("+i+") td:eq(3) select").val(item.right.type);
+            $("#ruleSettingParentDiv .filterTable:eq("+index+") tbody tr:eq("+i+") td:eq(4) input").val(item.right.value);
         })
         $.each(item.outputSettings,function (i,item) {
             $("#ruleSettingParentDiv .wrapOutputTable:eq("+index+") tbody tr:eq("+i+") td:first select").val(item.left.paramName);
@@ -805,7 +810,39 @@ strategy.renderRuleSettings = function (ruleParams) {
     })
 
 }
-strategy.addConditionTr = function(obj){
+
+strategy.showConditionGroupModal = function (obj) {
+    strategy.logicRadioObj = obj;
+    var group = $(obj).parents("tr").find("td:first").text();
+    $("#groupSelect option[value != '']").remove();
+    $("#groupSelect").append("<option value='"+group+"'>"+group+"</option>");
+    $("#groupSelect").append("<option value='0'>新建组</option>");
+    $("#ConditionGroupModal").modal("show")
+};
+
+strategy.addConditionTr = function(){
+    var obj = strategy.logicRadioObj;
+    var group = $(obj).parents("tr").find("td:first").text();
+    var newGroup = $("#groupSelect").val();
+    if (!newGroup) {
+        alert("请选择组！")
+        return;
+    }
+
+    if(newGroup == "0"){
+        newGroup = (+group) + 1 + "";
+    }else {
+        var groupFloag = $(obj).parents("tr").find("td:first").attr("group-flag");
+        if(groupFloag == ")"){
+            $(obj).parents("tr").find("td:first").removeAttr("group-flag")
+        }
+        $(obj).parents("tbody").find("tr").each(function () {
+            if(newGroup ==$(this).find("td:first").text()){
+                $(this).find("td:first").attr("group-flag","(");
+                return false
+            }
+        })
+    }
     var name = $(obj).attr("name");
     var reg = new RegExp("connector", "g");
     name = name.replace(reg,"");
@@ -817,9 +854,11 @@ strategy.addConditionTr = function(obj){
     }
     var num = $(obj).parents("tr").next().length;
     if(num == 0){
-        var tr = "<tr>" +$(strategy.defaultConditionTr).find(":radio").attr("name",newName).parents("tr").html()+ "</tr>";
+        var html = $(strategy.defaultConditionTr).find(":radio").attr("name",newName).parents("tr").find("td:first").text(newGroup).attr("group-flag",")").parent().html()
+        var tr = "<tr>" +html+ "</tr>";
         $(obj).parents("table tbody").append(tr)
     }
+    $("#ConditionGroupModal").modal("hide")
 
 }
 strategy.addOutputTr = function (obj) {
@@ -833,7 +872,33 @@ strategy.deteleOutputTr = function (obj) {
 
 strategy.deleteConditionTr = function (obj) {
     $(obj).parents("tr").prev().find("input.connector").prop("checked",false)
-    $(obj).parents("tr").remove()
+    var group = $(obj).parents("tr").find("td:first").text();
+    var groupFlag =  $(obj).parents("tr").find("td:first").attr("group-flag")
+    var num = 0;
+    $(obj).parents("tbody").find("tr").each(function () {
+        if(group == $(this).find("td:first").text()){
+            num ++;
+        }
+    })
+    if(num == 2){
+        if(groupFlag == ")"){
+            $(obj).parents("tr").prev().find("td:first").removeAttr("group-flag")
+        }
+        if(groupFlag == "("){
+            $(obj).parents("tr").next().find("td:first").removeAttr("group-flag")
+        }
+
+    }
+    if (num > 2) {
+        if(groupFlag == ")"){
+            $(obj).parents("tr").prev().find("td:first").attr("group-flag",")")
+        }
+        if(groupFlag == "("){
+            $(obj).parents("tr").next().find("td:first").attr("group-flag","(")
+        }
+    }
+
+    $(obj).parents("tr").remove();
 
 }
 
@@ -857,3 +922,7 @@ $("body").on("change",".outputSelect",function () {
         $(this).parent("td").next().find("select option[value='']").attr("selected",true)
     }
 })
+
+strategy.deleteRulePanel = function (obj) {
+    $(obj).parents(".rule-panel").remove()
+}

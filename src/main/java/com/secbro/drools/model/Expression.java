@@ -11,6 +11,9 @@ import lombok.Data;
 @Data
 public class Expression {
 
+    private Integer group;
+
+    private String groupFlag;
 
     private Left left;
 

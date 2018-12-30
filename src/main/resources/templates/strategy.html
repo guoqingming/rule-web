@@ -267,6 +267,26 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="ConditionGroupModal" tabindex="-1" role="dialog" aria-labelledby="ConditionGroupModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width: 30%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <select id="groupSelect" class="form-control" >
+                        <option value="" >请选择组</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="strategy.addConditionTr()">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
     <script src="jquery/jquery-3.3.1.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="bootstrap-table/js/bootstrap-table.min.js"></script>
