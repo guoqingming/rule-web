@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/bootstrap-table/css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="plugins/layui/css/layui.css">
+    <link rel="stylesheet" href="plugins/select2/css/select2.min.css">
+    
+    <style>
+        .modal{
+            overflow-y: auto;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+        .open>.dropdown-menu {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <form class="form-inline" role="form" style="margin-top: 15px">
+            <input type="hidden" id="strategyId"/>
+            <input type="hidden" id="strategyName_input"/>
+            <div class="form-group">
+                <label class="form-label">用户名</label>
+                <input id="usernameInput" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="form-label">邮箱</label>
+                <input class="form-control" id="emailInput">
+            </div>
+
+            <a class="btn btn-primary" href="#" onclick="user.search()">查询</a>
+            <a class="btn btn-primary" href="#" onclick="user.showAddModal()">新增</a>
+        </form>
+        <table id="userTable" class="table">
+
+        </table>
+
+    </div>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="addUserModalLabel">新增</h4>
+                </div>
+                <div class="modal-body">
+                    <input id="userId" type="hidden">
+                    <div class="form-group">
+                        <label class="form-label">用户名</label>
+                        <input class="form-control" id="username">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">中文名</label>
+                        <input id="usernameCn" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">邮箱</label>
+                        <input  class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">公司</label>
+                        <select id="companyIdSelect" class="form-control companySelect">
+                            <option value="" >请选择</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="user.add()">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="roleSettingModal" tabindex="-1" role="dialog" aria-labelledby="roleSettingModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="roleSettingModalLabel">角色配置</h4>
+                </div>
+                <div class="modal-body">
+                    <select id="roleSelect" class="form-control" multiple></select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="plugins/bootstrap-table/js/bootstrap-table.min.js"></script>
+    <script src="plugins/bootstrap-table/js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="plugins/select2/js/select2.full.min.js"></script>
+    <script src="js/biz/user.js?v=2"></script>
+</body>
+</html>

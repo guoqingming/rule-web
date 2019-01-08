@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/bootstrap-table/css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="plugins/layui/css/layui.css">
+    
+    <style>
+        .modal{
+            overflow-y: auto;
+        }
+        
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <form class="form-inline" menu="form" style="margin-top: 15px">
+            <input type="hidden" id="strategyId"/>
+            <input type="hidden" id="strategyName_input"/>
+            <div class="form-group">
+                <label class="form-label">菜单名称</label>
+                <input id="menunameInput" class="form-control">
+            </div>
+
+
+            <a class="btn btn-primary" href="#" onclick="menu.search()">查询</a>
+            <a class="btn btn-primary" href="#" onclick="menu.showAddModal()">新增</a>
+        </form>
+        <table id="menuTable" class="table">
+
+        </table>
+
+    </div>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="addMenuModal" tabindex="-1" menu="dialog" aria-labelledby="addMenuModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="addMenuModalLabel">新增菜单</h4>
+                </div>
+                <div class="modal-body">
+                    <input id="menuId" type="hidden">
+                    <div class="form-group">
+                        <label class="form-label">菜单名称</label>
+                        <input class="form-control" id="menuName">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">菜单URL</label>
+                        <input class="form-control" id="menuUrl">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">图标</label>
+                        <input class="form-control" id="menuIcon">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">顺序</label>
+                        <input class="form-control" id="menuOrder">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="menu.add()">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+
+    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="plugins/bootstrap-table/js/bootstrap-table.min.js"></script>
+    <script src="plugins/bootstrap-table/js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="js/biz/menu.js?v=1"></script>
+</body>
+</html>

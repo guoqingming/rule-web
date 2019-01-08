@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secbro.drools.mapper.RoleMenuMapper">
+  <resultMap id="BaseResultMap" type="com.secbro.drools.domain.RoleMenu">
+    <!-- generated @mbg.generated date: 2019-01-04 -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="menu_id" jdbcType="INTEGER" property="menuId" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!-- generated @mbg.generated date: 2019-01-04 -->
+    id, role_id, menu_id, create_at, create_by
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!-- generated @mbg.generated date: 2019-01-04 -->
+    select 
+    <include refid="Base_Column_List" />
+    from role_menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="queryMenuIds" resultType="java.lang.Integer">
+    select menu_id from role_menu where role_id = #{roleId};
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    <!-- generated @mbg.generated date: 2019-01-04 -->
+    delete from role_menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteRelation">
+      delete from role_menu where role_id = #{roleId} and menu_id = #{menuId}
+    </delete>
+    <insert id="insert" parameterType="com.secbro.drools.domain.RoleMenu">
+    <!-- generated @mbg.generated date: 2019-01-04 -->
+    insert into role_menu (id, role_id, menu_id, 
+      create_at, create_by)
+    values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{menuId,jdbcType=INTEGER}, 
+      #{createAt,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.secbro.drools.domain.RoleMenu">
+    <!-- generated @mbg.generated date: 2019-01-04 -->
+    insert into role_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="menuId != null">
+        menu_id,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="menuId != null">
+        #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByIdSelective" parameterType="com.secbro.drools.domain.RoleMenu">
+    <!-- generated @mbg.generated date: 2019-01-04 -->
+    update role_menu
+    <set>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="menuId != null">
+        menu_id = #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateById" parameterType="com.secbro.drools.domain.RoleMenu">
+    <!-- generated @mbg.generated date: 2019-01-04 -->
+    update role_menu
+    set role_id = #{roleId,jdbcType=INTEGER},
+      menu_id = #{menuId,jdbcType=INTEGER},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

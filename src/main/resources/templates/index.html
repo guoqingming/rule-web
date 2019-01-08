@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="bootstrap-table/css/bootstrap-table.min.css">-->
+    <link rel="stylesheet" href="plugins/layui/css/layui.css">
+
+    <style type="text/css">
+        .menu {
+            width: 200px;
+            background: #142D55;
+            color: #ffffff;
+            padding-top:  5px;
+            padding-bottom: 5px;
+            height: 500px;
+        }
+        .menu-item {
+            padding: 15px 15px;
+            font-size:larger;
+            text-align: center;
+        }
+        .menu-item:hover {
+            color: #00F7DE;
+
+        }
+        .left {
+            float:left;
+        }
+
+        .menu-selected {
+            background: #2b669a;
+        }
+    </style>
+</head>
+<body>
+<div class="global-container">
+    <div class="top">
+        <div class="">
+            <div class="logo">
+                <span class="">
+                    <img src="images/logo1.png">
+                </span>
+            </div>
+
+
+            <!--<div class="dropdown-menu">-->
+                <!--<img src="images/enid.png">-->
+            <!--</div>-->
+        </div>
+    </div>
+
+    <div class="left">
+        <ul class="menu">
+            <li class="menu-item" url="company"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;公司管理</li>
+            <li class="menu-item" url="project"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;项目管理</li>
+            <li class="menu-item" url="rule"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;策略管理</li>
+            <li class="menu-item" url="user"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;用户管理</li>
+            <li class="menu-item" url="role"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;角色管理</li>
+            <li class="menu-item" url="menu"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;菜单管理</li>
+
+        </ul>
+    </div>
+    <div class="col-md-10 main-side">
+
+    </div>
+
+</div>
+
+<script src="plugins/jquery/jquery-3.3.1.min.js"></script>
+<script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="plugins/layui/layui.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>-->
+<script src="js/global.js"></script>
+
+<script >
+
+   $(function () {
+       $('.menu').on("click",'.menu-item',function () {
+           var url = $(this).attr("url");
+           $(".main-side").empty()
+           if(url){
+               $(".main-side").load(url)
+           }
+           $(this).siblings().removeClass("menu-selected")
+           $(this).addClass("menu-selected")
+       })
+   })
+</script>
+</body>
+</html>

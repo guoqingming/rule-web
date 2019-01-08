@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secbro.drools.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.secbro.drools.domain.User">
+        <!-- generated @mbg.generated date: 2019-01-04 -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="user_name_cn" jdbcType="VARCHAR" property="userNameCn"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="company_id" jdbcType="INTEGER" property="companyId"/>
+        <result column="company_name" jdbcType="VARCHAR" property="companyName"/>
+        <result column="create_at" jdbcType="TIMESTAMP" property="createAt"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="update_at" jdbcType="TIMESTAMP" property="updateAt"/>
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="salt" jdbcType="VARCHAR" property="salt"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        <!-- generated @mbg.generated date: 2019-01-04 -->
+        id, user_name, user_name_cn, `password`, company_id, company_name, create_at, create_by,
+        update_at, update_by, `status`, salt, email
+    </sql>
+    <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!-- generated @mbg.generated date: 2019-01-04 -->
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getByAccount" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user where user_name = #{username}
+    </select>
+    <select id="listRecords" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from user
+        where 1 =1
+        <if test="username != null and username !=''">
+            and user_name like concat('%',#{username},'%')
+        </if>
+        <if test="email != null and email !=''">
+            and email like concat('%',#{email},'%')
+        </if>
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        <!-- generated @mbg.generated date: 2019-01-04 -->
+        delete from user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.secbro.drools.domain.User">
+        <!-- generated @mbg.generated date: 2019-01-04 -->
+        insert into user (id, user_name, user_name_cn,
+        `password`, company_id, company_name,
+        create_at, create_by, update_at,
+        update_by, `status`, salt,
+        email)
+        values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userNameCn,jdbcType=VARCHAR},
+        #{password,jdbcType=VARCHAR}, #{companyId,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR},
+        #{createAt,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateAt,jdbcType=TIMESTAMP},
+        #{updateBy,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{salt,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.secbro.drools.domain.User">
+        <!-- generated @mbg.generated date: 2019-01-04 -->
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="userNameCn != null">
+                user_name_cn,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+            <if test="companyId != null">
+                company_id,
+            </if>
+            <if test="companyName != null">
+                company_name,
+            </if>
+            <if test="createAt != null">
+                create_at,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="updateAt != null">
+                update_at,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="salt != null">
+                salt,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userNameCn != null">
+                #{userNameCn,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="companyName != null">
+                #{companyName,jdbcType=VARCHAR},
+            </if>
+            <if test="createAt != null">
+                #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateAt != null">
+                #{updateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="salt != null">
+                #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByIdSelective" parameterType="com.secbro.drools.domain.User">
+        <!-- generated @mbg.generated date: 2019-01-04 -->
+        update user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userNameCn != null">
+                user_name_cn = #{userNameCn,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                company_id = #{companyId,jdbcType=INTEGER},
+            </if>
+            <if test="companyName != null">
+                company_name = #{companyName,jdbcType=VARCHAR},
+            </if>
+            <if test="createAt != null">
+                create_at = #{createAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateAt != null">
+                update_at = #{updateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="salt != null">
+                salt = #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateById" parameterType="com.secbro.drools.domain.User">
+        <!-- generated @mbg.generated date: 2019-01-04 -->
+        update user
+        set user_name = #{userName,jdbcType=VARCHAR},
+        user_name_cn = #{userNameCn,jdbcType=VARCHAR},
+        `password` = #{password,jdbcType=VARCHAR},
+        company_id = #{companyId,jdbcType=INTEGER},
+        company_name = #{companyName,jdbcType=VARCHAR},
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+        create_by = #{createBy,jdbcType=VARCHAR},
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+        update_by = #{updateBy,jdbcType=VARCHAR},
+        `status` = #{status,jdbcType=TINYINT},
+        salt = #{salt,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

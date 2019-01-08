@@ -70,9 +70,9 @@ public class DroolsRulesService {
 //                "    dialect \"mvel\"\n" +
 //                "     when\n" +
 //                "       resultMap : HashMap()\n" +
-//                "       map: Map(this[\"name\"] == \"Bob\")\n" +
+//                "       map: Map(this[\"userNameCn\"] == \"Bob\")\n" +
 //                "     then\n" +
-//                "         resultMap.put(\"name\",map.get(\"name\"));\n" +
+//                "         resultMap.put(\"userNameCn\",map.get(\"userNameCn\"));\n" +
 //                "         System.out.println(\"执行成功\");\n" +
 //                "end";
         return "";

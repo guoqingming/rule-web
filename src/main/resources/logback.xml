@@ -11,7 +11,7 @@
     </layout>
   </appender>
 
-  <!--<loger name="com.netflix.curator" level="DEBUG"/>-->
+  <!--<loger userNameCn="com.netflix.curator" level="DEBUG"/>-->
   <logger name="com.secbro" level="DEBUG"/>
   <logger name="java.sql" level="DEBUG"/>
 

@@ -12,7 +12,7 @@ import lombok.Data;
 public class Right {
 
     /**
-     * 类型，1：常量，2：自定义
+     * 类型，1：常量，2：变量，3：自定义
      */
     private Integer type;
 

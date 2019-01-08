@@ -157,6 +157,9 @@ public class BizStrategyService {
                     } else {
                         oStr += expression.getRight().getValue() + ")\n";
                     }
+                }else if(expression.getRight().getType() == 2){
+//                    map.get("userNameCn")
+                    oStr += "map.get(\""+expression.getRight().getValue()+"\"))\n";
                 }
             }
 
@@ -187,5 +190,9 @@ public class BizStrategyService {
         kieSession.fireAllRules(new RuleNameStartsWithAgendaFilter(strategy.getStrategyName()));
         kieSession.dispose();
         return result;
+    }
+
+    public BizStrategy queryByName(String strategyName) {
+        return strategyMapper.queryByName(strategyName);
     }
 }

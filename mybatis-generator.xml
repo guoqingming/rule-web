@@ -65,7 +65,8 @@
       <!--<table tableName="sys_area" domainObjectName="sysArea"/>-->
       <!--<table tableName="bank_card_info" domainObjectName="BankCardInfo"/>-->
       <!--<table tableName="user" domainObjectName="User"/>-->
-      <table tableName="biz_strategy" domainObjectName="BizStrategy"/>
+      <table tableName="role" domainObjectName="Role"/>
+
       <!--<table tableName="rule_input" domainObjectName="RuleInput"/>-->
       <!--<table tableName="rule_output" domainObjectName="RuleOut"/>-->
 

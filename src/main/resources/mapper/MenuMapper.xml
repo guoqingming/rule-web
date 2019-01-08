@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.secbro.drools.mapper.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.secbro.drools.domain.Menu">
+    <!-- generated @mbg.generated date: 2019-01-04 -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="order" jdbcType="INTEGER" property="order" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="create_at" jdbcType="TIMESTAMP" property="createAt" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_at" jdbcType="TIMESTAMP" property="updateAt" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!-- generated @mbg.generated date: 2019-01-04 -->
+    id, `name`, icon, `order`, url, create_at, create_by, update_at, update_by
+  </sql>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!-- generated @mbg.generated date: 2019-01-04 -->
+    select 
+    <include refid="Base_Column_List" />
+    from menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="queryMenuUrlList" resultType="java.lang.String">
+    select  a.url from menu a, role_menu b where a.id = b.menu_id and b.role_id =#{roleId}
+  </select>
+  <select id="listRecords" resultType="com.secbro.drools.domain.Menu">
+    select  <include refid="Base_Column_List"/> from menu where 1=1
+    <if test="menuName !=null and menuName!=''">
+      and name like  concat('%',#{menuName},'%')
+    </if>
+
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    <!-- generated @mbg.generated date: 2019-01-04 -->
+    delete from menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.secbro.drools.domain.Menu">
+    <!-- generated @mbg.generated date: 2019-01-04 -->
+    insert into menu (id, `name`, icon, 
+      `order`, url, create_at, 
+      create_by, update_at, update_by
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, 
+      #{order,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{createAt,jdbcType=TIMESTAMP},
+      #{createBy,jdbcType=VARCHAR}, #{updateAt,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.secbro.drools.domain.Menu">
+    <!-- generated @mbg.generated date: 2019-01-04 -->
+    insert into menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="icon != null">
+        icon,
+      </if>
+      <if test="order != null">
+        `order`,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="order != null">
+        #{order,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByIdSelective" parameterType="com.secbro.drools.domain.Menu">
+    <!-- generated @mbg.generated date: 2019-01-04 -->
+    update menu
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="order != null">
+        `order` = #{order,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateById" parameterType="com.secbro.drools.domain.Menu">
+    <!-- generated @mbg.generated date: 2019-01-04 -->
+    update menu
+    set `name` = #{name,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      `order` = #{order,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_at = #{updateAt,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

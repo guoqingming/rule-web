@@ -7,7 +7,7 @@ rule scoreCheck1
          resultMap : HashMap() 
          map: Map(this["score"]>=60)
      then
-     resultMap.put("name",map.get("name"));
+     resultMap.put("userNameCn",map.get("userNameCn"));
      resultMap.put("message","及格");
 end
 rule scoreCheck2
@@ -16,6 +16,6 @@ rule scoreCheck2
              resultMap : HashMap() 
              map: Map(this["score"]<60)
          then
-         resultMap.put("name",map.get("name"));
+         resultMap.put("userNameCn",map.get("userNameCn"));
          resultMap.put("message","不及格");
 end

@@ -9,6 +9,6 @@ rule "mapTest"
        resultMap : HashMap()
        map: Map(this["name"] == "Bob" ||this["age"] <= 18)
      then
-         resultMap.put("sucess",map.get("name"));
+         resultMap.put("sucess",map.get("userNameCn"));
          System.out.println("执行成功1");
 end
