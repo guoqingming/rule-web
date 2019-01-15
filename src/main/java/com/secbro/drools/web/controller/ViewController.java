@@ -51,4 +51,8 @@ public class ViewController {
     public String menu() {
         return "menu";
     }
+    @GetMapping("/strategy")
+    public String strategy() {
+        return "strategy";
+    }
 }

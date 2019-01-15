@@ -1,5 +1,6 @@
 package com.secbro.drools.mapper;
 
+import com.secbro.drools.domain.Menu;
 import com.secbro.drools.domain.User;
 import com.secbro.drools.model.UserVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -24,4 +25,5 @@ public interface UserMapper {
     User getByAccount(String username);
 
     List<User> listRecords(@Param("username") String username, @Param("email") String email);
+
 }

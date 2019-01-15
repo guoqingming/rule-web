@@ -1,6 +1,8 @@
 package com.secbro.drools.shiro;
 
+import com.secbro.drools.domain.Menu;
 import com.secbro.drools.domain.User;
+import com.secbro.drools.service.MenuService;
 import com.secbro.drools.shiro.factory.IShiro;
 import com.secbro.drools.shiro.factory.ShiroFactroy;
 import com.secbro.drools.utils.ToolUtil;
@@ -14,12 +16,15 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+@Component
 public class ShiroDbRealm extends AuthorizingRealm {
+
 
     /**
      * 登录认证

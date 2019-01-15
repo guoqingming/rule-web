@@ -34,7 +34,10 @@
     </if>
 
   </select>
-  <delete id="deleteById" parameterType="java.lang.Integer">
+    <select id="authorizedMenus" resultMap="BaseResultMap">
+      select d.* from user a,role_user b,role_menu c,menu d where a.id = b.user_id and b.role_id = c.role_id and c.menu_id = d.id and a.user_name = #{userName}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Integer">
     <!-- generated @mbg.generated date: 2019-01-04 -->
     delete from menu
     where id = #{id,jdbcType=INTEGER}

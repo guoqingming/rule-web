@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.qm.utils.CheckUtil;
+import com.secbro.drools.domain.Menu;
 import com.secbro.drools.domain.User;
 import com.secbro.drools.mapper.RoleUserMapper;
 import com.secbro.drools.mapper.UserMapper;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @program: rule-web
@@ -106,6 +108,8 @@ public class UserService {
     }
 
     public List<Integer> roleIds(Integer userId) {
+
         return roleUserMapper.roleIds(userId);
     }
+
 }

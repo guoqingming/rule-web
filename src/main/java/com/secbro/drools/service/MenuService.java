@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @program: rule-web
@@ -42,5 +43,9 @@ public class MenuService {
 
     public List<Menu> list() {
         return menuMapper.listRecords(null);
+    }
+
+    public Set<Menu> authorizedMenus(String userName) {
+        return menuMapper.authorizedMenus(userName);
     }
 }

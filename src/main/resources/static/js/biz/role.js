@@ -120,7 +120,7 @@ $.get("menu/list",function (data) {
         console.log("选中 " + this.value)
         var roleId = $("#roleId").val();
         var url = "role/menu/bind";
-        var menuId = this.value;
+        var menuId = e.params.data.id;
         $.post(url, {roleId: roleId, menuId: menuId}, function (data) {
             validateResult(data)
         })

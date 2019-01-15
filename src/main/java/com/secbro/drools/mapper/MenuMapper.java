@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
+
 @Mapper
 public interface MenuMapper {
     int deleteById(Integer id);
@@ -22,4 +24,6 @@ public interface MenuMapper {
     List<String> queryMenuUrlList(Integer roleId);
 
     List<Menu> listRecords(@Param("menuName") String menuName);
+
+    Set<Menu> authorizedMenus(String userName);
 }

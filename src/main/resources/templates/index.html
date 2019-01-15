@@ -12,53 +12,72 @@
             width: 200px;
             background: #142D55;
             color: #ffffff;
-            padding-top:  5px;
+            padding-top: 5px;
             padding-bottom: 5px;
             height: 500px;
         }
+
         .menu-item {
             padding: 15px 15px;
-            font-size:larger;
+            font-size: larger;
             text-align: center;
         }
+
         .menu-item:hover {
             color: #00F7DE;
 
         }
+
         .left {
-            float:left;
+            float: left;
         }
 
         .menu-selected {
             background: #2b669a;
+        }
+
+        .logo {
+            background: #142D55;
+            width: 200px;
+            float: left;
+        }
+        .navbar.topRight {
+            position: absolute;
+            right: 0;
+            margin-bottom: 0px;
+            width: 150px;
         }
     </style>
 </head>
 <body>
 <div class="global-container">
     <div class="top">
-        <div class="">
+        <div style="overflow: hidden">
             <div class="logo">
                 <span class="">
                     <img src="images/logo1.png">
                 </span>
             </div>
 
-
-            <!--<div class="dropdown-menu">-->
-                <!--<img src="images/enid.png">-->
-            <!--</div>-->
+            <nav  class=" navbar navbar-default col-md-1 topRight" role="navigation" style="">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <strong id="userNameCnSpan"></strong>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" onclick="showPasswordModal()">修改密码</a></li>
+                            <li><a href="#" onclick="logout()">退出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </div>
 
     <div class="left">
         <ul class="menu">
-            <li class="menu-item" url="company"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;公司管理</li>
-            <li class="menu-item" url="project"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;项目管理</li>
-            <li class="menu-item" url="rule"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;策略管理</li>
-            <li class="menu-item" url="user"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;用户管理</li>
-            <li class="menu-item" url="role"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;角色管理</li>
-            <li class="menu-item" url="menu"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;菜单管理</li>
 
         </ul>
     </div>
@@ -68,25 +87,94 @@
 
 </div>
 
+<div class="modal fade" id="modifyPasswordModal" tabindex="-1" role="dialog" aria-labelledby="modifyPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="modifyPasswordModalLabel">密码修改</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">新密码</label>
+                    <input id="newPassword" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">密码确认</label>
+                    <input id="newPasswordConfirm" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="modifyPassword()">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
 <script src="plugins/jquery/jquery-3.3.1.min.js"></script>
 <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="plugins/layui/layui.js"></script>
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>-->
+<script src="js/biz/aes.js" type="text/javascript"></script>
+<script src="js/AesUtil.js" type="text/javascript"></script>
 <script src="js/global.js"></script>
 
-<script >
+<script>
 
-   $(function () {
-       $('.menu').on("click",'.menu-item',function () {
-           var url = $(this).attr("url");
-           $(".main-side").empty()
-           if(url){
-               $(".main-side").load(url)
-           }
-           $(this).siblings().removeClass("menu-selected")
-           $(this).addClass("menu-selected")
-       })
-   })
+    function logout(){
+        $.get("logout",function (data) {
+            if(data.success){
+                window.localStorage.clear();
+                location.href="login"
+            }
+        })
+    }
+function showPasswordModal() {
+    $("#modifyPasswordModal").modal("show")
+}
+    function modifyPassword() {
+        var newPassword = $("#newPassword").val();
+        var newPasswordConfirm = $("#newPasswordConfirm").val();
+        if (!newPassword) {
+            alert("密码不能为空")
+            return;
+        }
+        if (!newPasswordConfirm) {
+            alert("密码不能为空")
+            return;
+        }
+        if (newPassword != newPasswordConfirm) {
+            alert("密码不一致")
+            return;
+        }
+        var userId = JSON.parse(AesUtil.decript(window.localStorage.getItem("currentUser"))).id;
+        $.post("user/password/change",{userId:userId,newPassword:newPassword},function (data) {
+            validateResult(data)
+        })
+        $("#modifyPasswordModal").modal("hide");
+    }
+    $(function () {
+
+        $("#userNameCnSpan").text(JSON.parse(AesUtil.decript(window.localStorage.getItem("currentUser"))).userNameCn)
+        var menus = JSON.parse(AesUtil.decript(window.localStorage.getItem("currentUser"))).menus;
+        var items = ""
+        debugger
+        $.each(menus, function (index, item) {
+            console.log(item)
+            items += '<li class="menu-item" url="' + item.url + '"><span class="' + item.icon + '"></span>&nbsp;' + item.name + '</li>'
+        })
+        $("ul.menu").empty();
+        $("ul.menu").append(items);
+        $('.menu').on("click", '.menu-item', function () {
+            var url = $(this).attr("url");
+            $(".main-side").empty()
+            if (url) {
+                $(".main-side").load(url)
+            }
+            $(this).siblings().removeClass("menu-selected")
+            $(this).addClass("menu-selected")
+        })
+    })
 </script>
 </body>
 </html>

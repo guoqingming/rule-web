@@ -4,6 +4,8 @@ var parammeterTypeDict = {
     "Double":"浮点型",
     "Boolean":"布尔型"
 }
+
+
 layui.use(['layer'], function () {
     var layer = layui.layer
         
@@ -39,3 +41,4 @@ function validateResult(data) {
 function alert(msg) {
     layer.msg(msg,{icon:2,time:1000})
 }
+

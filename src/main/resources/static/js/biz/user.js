@@ -173,7 +173,7 @@ $.get("role/list",function (data) {
         console.log("选中 " + this.value)
         var userId = $("#userId").val();
         var url = "role/user/bind";
-        var roleId = this.value;
+        var roleId = e.params.data.id;
         $.post(url, {userId: userId, roleId: roleId}, function (data) {
             validateResult(data)
         })
@@ -231,7 +231,6 @@ user.showRoleSettingModal = function (id) {
         $.each(data.data,function (index, item) {
             arr.push(""+item)
         })
-        debugger
         $("#roleSelect").val(arr).trigger("change");
     })
     $("#roleSettingModal").modal("show")
